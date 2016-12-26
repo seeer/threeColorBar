@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>三色图</title>
+</head>
+<body style="margin:0;padding:0;">
+<style>
+.threeColor ul, .threeColor li,.threeColor div,.threeColor i,.threeColor span{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+.threeColor{
+    margin-left: 100px;
+    padding: 0;
+    width: 300px;
+    overflow: hidden;
+    padding-left: 8px;
+    padding-right: 20px;
+}
+.threeColor .bars{
+    height: 30px;
+    width: 100%;
+    display: block;
+    clear: both;
+}
+.threeColor .bar{
+    height: 30px;
+    background-color: #a2a2a2;
+    width: 46px;
+    display: inline-block;
+    float: left;
+}
+.threeColor .bar:first-child{
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+.threeColor .bar:last-child{
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+.threeColor .progress{
+    margin: 10px 0;
+}
+.threeColor .marks{
+    z-index: -1;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 16px;
+    overflow: visible;
+    font-size: 14px;
+}
+.threeColor .marks span{
+    position: absolute;
+    top:0;
+    height: 16px;
+    display: inline-block;
+    text-align: left;
+    margin-left: -5px;
+}
+.threeColor .marks .span0{
+    left: 0;
+}
+.threeColor .marks .span1{
+    left: 20%;
+}
+.threeColor .marks .span2{
+    left: 40%;
+}
+.threeColor .marks .span3{
+    left: 60%;
+}
+.threeColor .marks .span4{
+    left: 80%;
+}
+.threeColor .marks .span5{
+    left: 100%;
+    margin-left: -10px;
+}
+.threeColor .border{
+    position: relative;
+    border-left: 1px solid #aaaaaa;
+    border-bottom: 1px solid #aaaaaa;
+}
+.threeColor .lines{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+}
+.threeColor .lines li{
+    border: 0;
+    width: 20%;
+    height: 100%;
+    float: left;
+    display: block;
+    text-align: right;
+}
+.threeColor .lines i{
+    border-right: 1px dotted #bebebe;
+    height: 100%;
+    display: block;
+}
+</style>
+<div class="threeColor">
+    <div class="border">
+        <ul class="lines">
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+        </ul>
+        <div class="progress">
+            <div class="name">sfsdfasfewrfew</div>
+            <div class="bars">
+                <div class="bar"></div>
+                <div class="bar" style="background-color:#a899f3;"></div>
+                <div class="bar" style="background-color:#9bf983;"></div>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="name">是发达而发生大梵蒂冈的分割的发而非是打发额</div>
+            <div class="bars">
+                <div class="bar"></div>
+                <div class="bar" style="background-color:#a899f3;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="marks">
+        <span class="span0">0</span>
+        <span class="span1">20</span>
+        <span class="span2">40</span>
+        <span class="span3">60</span>
+        <span class="span4">80</span>
+        <span class="span5">100</span>
+   </div>
+</div>
+
+</body>
+</html>

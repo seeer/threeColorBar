@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>来个例子</title> 
+    <script type="text/javascript" src="jQuery.js"></script>
+</head>
+<body style="margin:0;padding:0;">
+<details style="margin:20px 50px;">
+    <summary>附注：</summary>
+    <div>本人是jquery党，不用jquery啥也不会。</div>
+    <div>对于不求效率的我来说，能实现就好。</div>
+    <div>浏览器兼容？抱歉，这个没想过，支持h5的大约应该没准也许可能maybe都行,反正我chrome能运行\(^o^)/~。</div>
+</details>
+<style>
+.threeColor ul, .threeColor li,.threeColor div,.threeColor i,.threeColor span{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+.threeColor{
+    margin-left: 100px;
+
+    padding: 0;
+    width: 300px;
+    overflow: hidden;
+    padding-left: 8px;
+    padding-right: 20px;
+}
+.threeColor .bars{
+    height: 30px;
+    width: 100%;
+    display: block;
+    clear: both;
+}
+.threeColor .bar{
+    height: 30px;
+    background-color: #a2a2a2;
+    width:0;
+    transition: width 2s;
+    -moz-transition: width 2s; /* Firefox 4 */
+    -webkit-transition: width 2s; /* Safari 和 Chrome */
+    -o-transition: width 2s; /* Opera */
+    display: inline-block;
+    float: left;
+}
+.threeColor .bar:first-child{
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+.threeColor .bar:last-child{
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+.threeColor .progress{
+    margin: 10px 0;
+}
+.threeColor .marks{
+    z-index: -1;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 16px;
+    overflow: visible;
+    font-size: 14px;
+}
+.threeColor .marks span{
+    position: absolute;
+    top:0;
+    height: 16px;
+    display: inline-block;
+    text-align: left;
+    margin-left: -5px;
+}
+.threeColor .marks .span0{
+    left: 0;
+}
+.threeColor .marks .span1{
+    left: 20%;
+}
+.threeColor .marks .span2{
+    left: 40%;
+}
+.threeColor .marks .span3{
+    left: 60%;
+}
+.threeColor .marks .span4{
+    left: 80%;
+}
+.threeColor .marks .span5{
+    left: 100%;
+    margin-left: -10px;
+}
+.threeColor .border{
+    position: relative;
+    min-height: 50px;
+    border-left: 1px solid #aaaaaa;
+    border-bottom: 1px solid #aaaaaa;
+}
+.threeColor .lines{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+}
+.threeColor .lines li{
+    border: 0;
+    width: 20%;
+    height: 100%;
+    float: left;
+    display: block;
+    text-align: right;
+}
+.threeColor .lines i{
+    border-right: 1px dotted #bebebe;
+    height: 100%;
+    display: block;
+}
+</style>
+
+<div class="threeColor">
+    <div class="border">
+        <ul class="lines">
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+        </ul>
+    </div>
+    <div class="marks">
+        <span class="span0">0</span>
+        <span class="span1">20</span>
+        <span class="span2">40</span>
+        <span class="span3">60</span>
+        <span class="span4">80</span>
+        <span class="span5">100</span>
+   </div>
+</div>
+<div style="text-align:center;width:400px;margin-bottom:30px;">总百分比%</div>
+
+<div class="threeColor">
+    <div class="border">
+        <ul class="lines">
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+            <li><i></i></li>
+        </ul>
+    </div>
+    <div class="marks">
+   </div>
+</div>
+<div style="text-align:center;width:400px;">平均分配</div>
+<script type="text/javascript">
+    function makeDatas(){
+        var name = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ你我他好不可怜忽如一夜春风来千树万树梨花开'
+        var nameArr = name.split("");
+        var datas = [];
+        for(var i=0;i<5;i++){
+            var obj={data:[]};
+            obj.name = "";
+            for(var j=0;j<Math.max(Math.random()*nameArr.length,4);j++){
+                obj.name += nameArr[parseInt(Math.random()*nameArr.length)];
+            }
+            obj.data.push({bgcolor:"blue",value:parseInt(Math.random()*100)});
+            obj.data.push({bgcolor:"yellow",value:parseInt(Math.random()*100)});
+            obj.data.push({bgcolor:"gray",value:parseInt(Math.random()*100)});
+            datas.push(obj);
+        }
+        return datas;
+    }
+    /*
+    * target dom元素或字符串{jquery选择，class名选择}
+    * datas [{name:String,data:[{bgcolor:String,value:Number}]}]
+    */
+    function makeThreeBar(target,datas){
+        var progress = '<div class="progress"><span class="name"></span><div class="bars"></div></div>';
+         $(target).find(".progress").remove();
+        var max =1;
+        for(var i=0;i<datas.length;i++){
+            var $progress = $(progress);
+            var t =0;
+            for(var j=0;j<datas[i].data.length;j++){
+                if(datas[i].data[j].value) // 个人认为没有值或者值是0的显示没意义
+                    $progress.find(".bars").append('<span class="bar"></span>');
+                t += datas[i].data[j].value;
+            }
+            max = max > t ? max : t;
+            $(target).find(".border").append($progress);
+            console.log(t)
+        }
+        console.log("max:",max)
+        setTimeout(function() { // 这块不加是不行的
+            for(var i=0;i<datas.length;i++){
+                var $progress =  $(target).find(".progress");
+                var indent = 0;
+                $progress.eq(i).find(".name").html(datas[i].name);
+                for(var j=0;j<datas[i].data.length;j++){
+                    if(!datas[i].data[j].value)indent++;
+                    else if(datas[i].data[j].value)
+                        $progress.eq(i).find(".bar").eq(j-indent).css({width:(datas[i].data[j].value/max*100)+"%","background-color":datas[i].data[j].bgcolor});
+                }
+            }
+        },0);
+    }
+    function makeThreeBar2(target,datas){
+        var progress = '<div class="progress"><span class="name"></span><div class="bars"></div></div>';
+        $(target).find(".marks").empty();
+        $(target).find(".progress").remove();
+        var max =1;
+        for(var i=0;i<datas.length;i++){
+            var $progress = $(progress);
+            var t =0;
+            for(var j=0;j<datas[i].data.length;j++){
+                if(datas[i].data[j].value) // 个人认为没有值或者值是0的显示没意义
+                    $progress.find(".bars").append('<span class="bar"></span>');
+                t += datas[i].data[j].value;
+            }
+            max = max > t ? max : t;
+            $(target).find(".border").append($progress);
+            console.log(t)
+        }
+        max = Math.ceil(max);
+        console.log("pre:",max)
+        max += 5-(max%5||5);
+        console.log("max:",max)
+        var spans = '<span class="span0">0</span>';
+        for(var i=1;i<=5;i++){
+            spans += '<span class="span'+i+'">'+(max/5*i)+'</span>';
+        }
+        $(target).find(".marks").html(spans);
+        setTimeout(function() { // 这块不加是不行的
+            for(var i=0;i<datas.length;i++){
+                var $progress =  $(target).find(".progress");
+                var indent = 0;
+                $progress.eq(i).find(".name").html(datas[i].name);
+                for(var j=0;j<datas[i].data.length;j++){
+                    if(!datas[i].data[j].value)indent++;
+                    else if(datas[i].data[j].value)
+                        $progress.eq(i).find(".bar").eq(j-indent).css({width:(datas[i].data[j].value/max*100)+"%","background-color":datas[i].data[j].bgcolor});
+                }
+            }
+        },0);
+    }
+    makeThreeBar($('.threeColor').eq(0),makeDatas());
+    makeThreeBar2($('.threeColor').eq(1),makeDatas());
+/*
+
+    console.time("ccc")
+    var c =0;
+    var inter = setInterval(function(){
+        makeThreeBar($('.threeColor').eq(0),makeDatas());
+        makeThreeBar2($('.threeColor').eq(1),makeDatas());
+        c++;
+        if(c>100){
+            clearInterval(inter);
+             console.timeEnd("ccc")
+        }
+    },0);
+   
+*/
+</script>
+</body>
+</html>
